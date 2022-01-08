@@ -1,0 +1,32 @@
+// VARIABLES AND MIXINS
+@import './base/variables';
+@import './base/mixins';
+
+// DEFAULTS
+@import './base/_animation.css';
+@import './base/fonts';
+@import './base/normalize';
+@import './base/common';
+@import './base/typography';
+@import './base/helpers';
+
+//MODULES
+@import 'modules/filters/filter-group';
+@import 'modules/app/checkbox-btn';
+@import 'modules/app/select-block';
+@import 'modules/app/v-input';
+@import 'modules/app/check-squared';
+@import 'modules/app/btn';
+//sections
+
+[data-observer] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition-delay: 0.4s;
+  transition: transform 1.3s cubic-bezier(.19, 1, .22, 1), opacity 1.3s cubic-bezier(.19, 1, .22, 1);
+
+  &.animated {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "roomsSelected": [
+    {"value": "Studio","label": "Студия"},
+    {"value": "1","label": "1"},
+    {"value": "2","label": "2"},
+    {"value": "3","label": "3"},
+    {"value": "openplan","label": "своб. план"}
+  ],
+  "deadlineSelected": [
+    {"value": "1","label": "дом сдан"},
+    {"value": "2022","label": "2022"},
+    {"value": "2023","label": "2023"},
+    {"value": "2024+","label": "2023+", "checked": true}
+  ],
+  "finishing": [
+    {"description": "отделка стен и пола + сантехника","label":"чистовая", "value": "1", "id": "2r3"},
+    {"description": "без разводки коммуникаций и стяжки пола","label":"без отделки", "value": "2", "id": "643gfd"},
+    {"description": "стяжка пола + подготовка стен","label":"предчистовая (white box)", "value": "3", "id": "64364gfd"},
+    {"description": "отделка + сантехника + мебель","label":"под ключ / с мебелью", "value": "4", "id": "64375gfd"}
+  ]
+}

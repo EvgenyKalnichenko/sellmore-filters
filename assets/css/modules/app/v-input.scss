@@ -1,0 +1,78 @@
+.v-input {
+  $block: &;
+  position: relative;
+  display: inline-flex;
+  //border: 1px solid red;
+  border: 1px solid transparent;
+  font-size: 14px;
+
+  &:hover {
+
+    #{$block}__clear {
+      opacity: 1;
+    }
+  }
+
+  &__counter {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    line-height: 1;
+    color: #000;
+    max-width: 100%;
+    display: inline-flex;
+    align-items: center;
+    pointer-events: none;
+  }
+
+  &__num {
+    margin-bottom: 1px;
+    background: #dfebff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    max-width: calc(100% - 20px);
+  }
+
+  &__clear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    pointer-events: all;
+    right: 0;
+    padding: 0;
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: 0.2s ease-in-out;
+    background: #dfebff;
+    border-radius: 4px;
+    opacity: 0;
+
+    svg {
+      width: 10px;
+    }
+
+    &:hover {
+      background: #f5f4f0;
+    }
+  }
+
+  &__i {
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    width: 100%;
+    padding: 10px 20px 10px 10px;
+    height: 24px;
+    max-width: 150px;
+  }
+}

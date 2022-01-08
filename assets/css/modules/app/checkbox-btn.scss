@@ -1,0 +1,15 @@
+.checkbox-btn {
+  cursor: pointer;
+  padding: 6px 9px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease-in-out;
+  display: block;
+
+  &:hover {
+    background-color:  $grey;
+  }
+
+  &.active {
+    background-color: #dfebff;
+  }
+}
