@@ -2,17 +2,17 @@
   <div class="container">
     <br><br><br>
     <div>
-      <form action="#" class="search-form" id="filters">
+      <form @submit.prevent="handlerSubmit" action="#" class="search-form" id="filters">
         <input type="hidden" name="filter" value="1">
         <catalog-filters-control-buttons
           :controls="roomsSelected"
           @input="onChangeFilters"
-          name="rooms"
+          name="rooms[]"
         />
         <catalog-filters-control-buttons
           :controls="deadlineSelected"
           @input="onChangeFilters"
-          name="deadline"
+          name="deadline[]"
         />
         <catalog-filters-range
           placeholder-first="Цена от"
@@ -38,7 +38,12 @@
           name="otdelka"
           @handlerInput="onChangeFilters"
         />
-        <button class="search-form__btn btn">Показать</button>
+        <div class="search-form__bottom">
+          <button type="button" class="btn" @click="$modal.show('filters')">Еще параметры</button>
+          <button type="submit" class="search-form__btn btn">Показать <span>(125)</span></button>
+          <button type="button" class="btn btn--white">Очистить</button>
+        </div>
+        <modal-filters />
       </form>
     </div>
   </div>
@@ -51,7 +56,8 @@ export default {
   components: {
     catalogFiltersControlButtons: () => import("~/components/filters/catalog-filters-control-buttons"),
     catalogFiltersRange: () => import("~/components/filters/catalog-filters-range"),
-    catalogFiltersSelect: () => import("~/components/filters/catalog-filters-select")
+    catalogFiltersSelect: () => import("~/components/filters/catalog-filters-select"),
+    modalFilters: () => import("~/components/filters/modal-filters")
   },
   async asyncData({$axios}) {
     let roomsSelected, deadlineSelected, finishing, filters
@@ -80,30 +86,23 @@ export default {
     }
   },
   mounted() {
-    this.setFilters(this.filters)
+    // this.setFilters(this.filters)
   },
   methods: {
-    ...mapActions('filters', ['setFilters']),
+    ...mapActions('filters', ['addSelectedFilters']),
+    ...mapActions('filters', ['applyFilters']),
     onChangeFilters(data) {
-
-      const arr = new Map();
-      arr.set(data.name,data.value)
-      console.log('onChangeRooms', arr)
-      // const myForm = document.getElementById('filters')
-      // const formData = new FormData(myForm)
-      // const data = []
-      // for (const [key, val] of formData.entries()) {
-      //   if(val.length) {
-      //     data.push({ [key]: val })
-      //   }
-      // }
-      // console.log(data)
-      // this.$router.push({
-      //   path: `${this.$route.path}`,
-      //   query: data[1]
-      // })
+      this.addSelectedFilters(data)
     },
-    handlerInput (){}
+    handlerSubmit (){
+      this.applyFilters()
+      this.$router.push({
+        path: `${this.$route.path}${this.url}`
+      })
+    }
+  },
+  computed: {
+    ...mapGetters('filters', ['url']),
   }
 }
 </script>

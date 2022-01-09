@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     handlerInput () {
-      this.$emit('handlerInput')
+      this.$emit('handlerInput', {name: this.name, value: this.value})
     }
   }
 }

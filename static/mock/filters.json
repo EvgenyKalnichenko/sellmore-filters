@@ -8,9 +8,9 @@
   ],
   "deadlineSelected": [
     {"value": "1","label": "дом сдан"},
-    {"value": "2022","label": "2022"},
+    {"value": "2022","label": "2022" },
     {"value": "2023","label": "2023"},
-    {"value": "2024+","label": "2023+", "checked": true}
+    {"value": "2024+","label": "2024+"}
   ],
   "finishing": [
     {"description": "отделка стен и пола + сантехника","label":"чистовая", "value": "1", "id": "2r3"},
