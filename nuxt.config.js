@@ -25,8 +25,6 @@ export default {
     host: '0.0.0.0'
   },
   axios: {
-    baseURL: 'http://192.168.0.11:3001/',
-    withCredentials: true
   },
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
