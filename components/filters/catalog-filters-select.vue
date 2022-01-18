@@ -27,7 +27,7 @@
       <div class="select-block__dropdown" v-show="areOptionsVisible">
         <b-checkbox
           ref="checkbox"
-          v-for="(item, key) in value"
+          v-for="(item, key) in controls"
           :key="key"
           :value="item"
           :name="name"
@@ -51,7 +51,7 @@ export default {
     bCheckbox: () => import("~/components/app-components/b-checkbox")
   },
   props: {
-    value: {
+    controls: {
       type: [Object, Array],
       required: true
     },

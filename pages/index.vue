@@ -5,35 +5,40 @@
       <form @submit.prevent="handlerSubmit" action="#" class="search-form" id="filters">
         <input type="hidden" name="filter" value="1">
         <catalog-filters-control-buttons
-          :controls="roomsSelected"
+          :controls="roomsControls"
+          :value="rooms"
           @input="onChangeFilters"
-          name="rooms[]"
+          name="rooms"
         />
         <catalog-filters-control-buttons
           :controls="deadlineSelected"
+          :value="deadline"
           @input="onChangeFilters"
-          name="deadline[]"
+          name="deadline"
         />
         <catalog-filters-range
           placeholder-first="Цена от"
           name-first="price_ot"
+          :valueOt="price_ot"
           placeholder-second="до"
           name-second="price_do"
+          :valueDo="price_do"
           type-range="₽"
           @handlerInput="onChangeFilters"
         />
-        <catalog-filters-range
-          placeholder-first="Площадь от"
-          name-first="square_ot"
-          placeholder-second="до"
-          name-second="square_do"
-          type-range="м<sup>2</sup>"
-          @handlerInput="onChangeFilters"
-          :max-symbol-first="18"
-          :max-symbol-second="18"
-        />
+<!--        <catalog-filters-range-->
+<!--          placeholder-first="Площадь от"-->
+<!--          name-first="square_ot"-->
+<!--          placeholder-second="до"-->
+<!--          name-second="square_do"-->
+<!--          type-range="м<sup>2</sup>"-->
+<!--          @handlerInput="onChangeFilters"-->
+<!--          :max-symbol-first="18"-->
+<!--          :max-symbol-second="18"-->
+<!--        />-->
         <catalog-filters-select
-          :value="finishing"
+          :controls="finishing"
+          :value="otdelka"
           title="Отделка"
           name="otdelka"
           @handlerInput="onChangeFilters"
@@ -60,18 +65,18 @@ export default {
     modalFilters: () => import("~/components/filters/modal-filters")
   },
   async asyncData({$axios}) {
-    let roomsSelected, deadlineSelected, finishing, filters
+    let roomsControls, deadlineSelected, finishing, filters
     await $axios.$get('/mock/filters.json').then((res) => {
       console.log(res)
       filters = res
-      roomsSelected = res.roomsSelected
+      roomsControls = res.roomsControls
       deadlineSelected = res.deadlineSelected
       finishing = res.finishing
     }).catch((error) => {
       console.error(error)
     })
     return {
-      roomsSelected,
+      roomsControls,
       deadlineSelected,
       finishing,
       filters
@@ -79,7 +84,7 @@ export default {
   },
   data() {
     return {
-      roomsSelected: null,
+      roomsControls: null,
       deadlineSelected: null,
       finishing: null,
       filters: null
@@ -89,10 +94,11 @@ export default {
     // this.setFilters(this.filters)
   },
   methods: {
-    ...mapActions('filters', ['addSelectedFilters']),
+    ...mapActions('filters', ['changeFilters']),
     ...mapActions('filters', ['applyFilters']),
     onChangeFilters(data) {
-      this.addSelectedFilters(data)
+      console.log(data)
+      this.changeFilters(data)
     },
     handlerSubmit (){
       this.applyFilters()
@@ -103,6 +109,11 @@ export default {
   },
   computed: {
     ...mapGetters('filters', ['url']),
+    ...mapGetters('filters', ['rooms']),
+    ...mapGetters('filters', ['deadline']),
+    ...mapGetters('filters', ['otdelka']),
+    ...mapGetters('filters', ['price_ot']),
+    ...mapGetters('filters', ['price_do']),
   }
 }
 </script>

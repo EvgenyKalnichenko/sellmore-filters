@@ -23,6 +23,9 @@
 export default {
   name: "catalog-filters-range",
   props: {
+    value: {
+      required: false
+    },
     nameFirst: {
       type: String,
       required: true

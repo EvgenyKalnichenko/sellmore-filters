@@ -9,7 +9,7 @@
         :name="name"
         :label="item.label"
         :value="item.value"
-        :checked="item.checked"
+        :control="value"
         @handlerChange="handlerChange"
       />
     </div>
@@ -25,18 +25,6 @@ export default {
   props: ['value', 'controls', 'name'],
   methods: {
     handlerChange (data) {
-      // const myForm =  this.$refs.filter.$el
-      // const formData = new FormData(myForm)
-      // const array = []
-      // const obj = {}
-      // this.$refs.checkbox.forEach(el => {
-      //   const input = el.$el.querySelector('.checkbox-btn__input')
-      //   if(input.checked === true) {
-      //     array.push(input.value)
-      //   }
-      // })
-      // Object.assign(obj, { [data.name]: array })
-      // console.log(data)
       this.$emit('input', data)
     }
   }

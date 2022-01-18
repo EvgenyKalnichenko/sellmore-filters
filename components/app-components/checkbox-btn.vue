@@ -2,15 +2,15 @@
   <label
     ref="label"
     class="checkbox-btn"
-    :class="checkedInput ? 'active' : ''"
+    :class="checked ? 'active' : ''"
   >
     <input
       class="checkbox-btn__input"
       type="checkbox"
       :name="name"
       :value="value"
+      :checked="checked"
       @change="handlerChange"
-      :checked="checkedInput"
       hidden
     >
     <span class="checkbox-btn__label">{{ label }}</span>
@@ -18,9 +18,13 @@
 </template>
 
 <script>
+
 export default {
   name: "checkbox-btn",
   props: {
+    control: {
+      type: [Array, Object]
+    },
     label: {
       type: String,
       required: true
@@ -30,22 +34,16 @@ export default {
     },
     value: {
       type: String
-    },
-    checked: {
-      type: Boolean,
-      required: false,
-      default: false
-    }
-  },
-  data () {
-    return {
-      checkedInput: this.checked
     }
   },
   methods: {
     handlerChange(e) {
-      this.checkedInput = !this.checkedInput
       this.$emit('handlerChange',{ name: this.name, value: this.value })
+    }
+  },
+  computed: {
+    checked () {
+      return !!this.control.find(el => el.value === this.value)
     }
   }
 }
