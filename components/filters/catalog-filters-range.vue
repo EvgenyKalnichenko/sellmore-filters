@@ -3,6 +3,7 @@
     <div class="filter-group__range">
       <v-input-num
         :name="nameFirst"
+        :value="valueOt"
         :placeholder="placeholderFirst"
         :maxlength="maxSymbolFirst"
         @handlerInput="handlerInput"
@@ -10,6 +11,7 @@
       —
       <v-input-num
         :name="nameSecond"
+        :value="valueDo"
         :placeholder="placeholderSecond"
         :maxlength="maxSymbolSecond"
         @handlerInput="handlerInput"
@@ -24,6 +26,12 @@ export default {
   name: "catalog-filters-range",
   props: {
     value: {
+      required: false
+    },
+    valueOt: {
+      required: false
+    },
+    valueDo: {
       required: false
     },
     nameFirst: {

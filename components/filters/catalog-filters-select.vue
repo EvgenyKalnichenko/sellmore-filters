@@ -4,12 +4,12 @@
       class="select-block__top"
       @click="areOptionsVisible = !areOptionsVisible"
     >
-      <span v-if="!selected.length"> {{ title }}</span>
+      <span v-if="!value.length"> {{ title }}</span>
       <div class="select-block__active" v-else>
         <span class="select-block__info">
-          <span class="select-block__selected">{{selected[0].label}}</span>
-          <span v-if="selected.length > 1">...</span>
-          <span v-if="selected.length > 1">{{ selected.length }}</span>
+          <span class="select-block__selected">{{value[0].name}}</span>
+          <span v-if="value.length > 1">...</span>
+          <span v-if="value.length > 1">{{ value.length }}</span>
         </span>
         <span class="select-block__clear" @click.stop="reset">
           <svg xmlns="http://www.w3.org/2000/svg" width="11" height="10" viewBox="0 0 11 10" fill="none">
@@ -25,12 +25,15 @@
       v-bind:css="false"
     >
       <div class="select-block__dropdown" v-show="areOptionsVisible">
+        {{value}}
+        {{selected}}
         <b-checkbox
           ref="checkbox"
           v-for="(item, key) in controls"
           :key="key"
           :value="item"
           :name="name"
+          :control="value"
           @handlerInput="handlerInput"
         />
         <div class="select-block__bottom">
@@ -43,6 +46,7 @@
 
 <script>
 import {beforeEnter, leave, enter} from '~/assets/js/dropdownAnimation'
+import {mapActions} from "vuex";
 
 export default {
   name: "catalog-filters-select",
@@ -62,6 +66,9 @@ export default {
     name: {
       type: String,
       required: true
+    },
+    value: {
+      required: false
     }
   },
   data() {
@@ -89,7 +96,7 @@ export default {
       }
     },
     getArraySelectedFilter(data) {
-      if (!this.selected.find(p => data.label === p.label)) {
+      if (!this.selected.find(p => data.value === p.value)) {
         this.selected = [...this.selected, {
           ...data
         }]
@@ -105,11 +112,14 @@ export default {
       console.log('save')
     },
     reset() {
-      this.$refs.checkbox.forEach(el => {
-        if (el.$el.querySelector('input').checked) {
-          el.$el.querySelector('input').click()
-        }
-      })
+      this.selected = []
+      this.resetFilters(this.name)
+    },
+    ...mapActions('filters', ['resetFilters']),
+  },
+  watch: {
+    value () {
+      this.getArraySelectedFilter(this.value)
     }
   },
   mounted() {

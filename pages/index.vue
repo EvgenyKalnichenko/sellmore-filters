@@ -2,51 +2,54 @@
   <div class="container">
     <br><br><br>
     <div>
+      {{this.filtersControl}}
       <form @submit.prevent="handlerSubmit" action="#" class="search-form" id="filters">
         <input type="hidden" name="filter" value="1">
         <catalog-filters-control-buttons
           :controls="roomsControls"
-          :value="rooms"
+          :value="this.filtersControl.rooms"
           @input="onChangeFilters"
-          name="rooms"
+          name="rooms[]"
         />
         <catalog-filters-control-buttons
           :controls="deadlineSelected"
-          :value="deadline"
+          :value="this.filtersControl.deadline"
           @input="onChangeFilters"
-          name="deadline"
+          name="deadline[]"
         />
         <catalog-filters-range
           placeholder-first="Цена от"
           name-first="price_ot"
-          :valueOt="price_ot"
+          :valueOt="this.filtersControl.price_ot"
           placeholder-second="до"
           name-second="price_do"
-          :valueDo="price_do"
+          :valueDo="this.filtersControl.price_do"
           type-range="₽"
           @handlerInput="onChangeFilters"
         />
-<!--        <catalog-filters-range-->
-<!--          placeholder-first="Площадь от"-->
-<!--          name-first="square_ot"-->
-<!--          placeholder-second="до"-->
-<!--          name-second="square_do"-->
-<!--          type-range="м<sup>2</sup>"-->
-<!--          @handlerInput="onChangeFilters"-->
-<!--          :max-symbol-first="18"-->
-<!--          :max-symbol-second="18"-->
-<!--        />-->
+        <catalog-filters-range
+          placeholder-first="Площадь от"
+          name-first="square_ot"
+          :valueOt="this.filtersControl.square_ot"
+          placeholder-second="до"
+          name-second="square_do"
+          :valueDo="this.filtersControl.square_do"
+          type-range="м<sup>2</sup>"
+          @handlerInput="onChangeFilters"
+          :max-symbol-first="18"
+          :max-symbol-second="18"
+        />
         <catalog-filters-select
           :controls="finishing"
-          :value="otdelka"
+          :value="this.filtersControl.otdelka"
           title="Отделка"
-          name="otdelka"
+          name="otdelka[]"
           @handlerInput="onChangeFilters"
         />
         <div class="search-form__bottom">
           <button type="button" class="btn" @click="$modal.show('filters')">Еще параметры</button>
           <button type="submit" class="search-form__btn btn">Показать <span>(125)</span></button>
-          <button type="button" class="btn btn--white">Очистить</button>
+          <button type="button" class="btn btn--white" @click="resetAllFilters">Очистить</button>
         </div>
         <modal-filters />
       </form>
@@ -90,12 +93,11 @@ export default {
       filters: null
     }
   },
-  mounted() {
-    // this.setFilters(this.filters)
-  },
   methods: {
     ...mapActions('filters', ['changeFilters']),
     ...mapActions('filters', ['applyFilters']),
+    ...mapActions('filters', ['resetFilters']),
+    ...mapActions('filters', ['resetFiltersAll']),
     onChangeFilters(data) {
       console.log(data)
       this.changeFilters(data)
@@ -105,15 +107,13 @@ export default {
       this.$router.push({
         path: `${this.$route.path}${this.url}`
       })
+    },
+    resetAllFilters() {
+      this.resetFiltersAll()
     }
   },
   computed: {
-    ...mapGetters('filters', ['url']),
-    ...mapGetters('filters', ['rooms']),
-    ...mapGetters('filters', ['deadline']),
-    ...mapGetters('filters', ['otdelka']),
-    ...mapGetters('filters', ['price_ot']),
-    ...mapGetters('filters', ['price_do']),
+    ...mapGetters('filters', ['filtersControl'])
   }
 }
 </script>

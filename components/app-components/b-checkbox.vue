@@ -5,6 +5,7 @@
         :id="value.id"
         :value="value.value"
         :name="name"
+        :control="control"
         @handlerInput="handlerInput"
       />
     </span>
@@ -22,6 +23,9 @@ export default {
     value: {
       type: Object,
       required: true
+    },
+    control: {
+      required: false
     },
     name: {
       type: String,

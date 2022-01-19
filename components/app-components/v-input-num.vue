@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
   name: "v-input-num",
   props: {
@@ -44,7 +46,11 @@ export default {
       showCounter: true
     }
   },
+  mounted() {
+    this.valueModel = this.currencyFilter(this.valueModel)
+  },
   methods: {
+    ...mapActions('filters', ['resetFilters']),
     emit () {
       this.$emit('handlerInput', { name: this.name, value: this.valueModel })
     },
@@ -53,20 +59,21 @@ export default {
     },
     outOfFocus() {
       this.showCounter = true
-      console.log('outOfFocus')
       this.emit()
     },
     clear() {
-      this.valueModel = ''
-      setTimeout(() => {
-        this.emit()
-      }, 0)
+      this.resetFilters(this.name)
     },
     currencyFilter (str) {
       return new Intl.NumberFormat('ru-RU', {
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
       }).format(str)
+    }
+  },
+  computed: {
+    val () {
+      return this.value
     }
   },
   watch: {
@@ -76,6 +83,9 @@ export default {
       if ( parseInt(this.valueModel) === 0 ) {
         this.valueModel = ''
       }
+    },
+    value () {
+      this.valueModel = this.value
     }
   }
 }

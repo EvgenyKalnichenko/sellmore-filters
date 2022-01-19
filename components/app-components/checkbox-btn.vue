@@ -43,7 +43,11 @@ export default {
   },
   computed: {
     checked () {
-      return !!this.control.find(el => el.value === this.value)
+      if(this.control) {
+        return !!this.control.find(el => el.value === this.value)
+      } else {
+        return false
+      }
     }
   }
 }
