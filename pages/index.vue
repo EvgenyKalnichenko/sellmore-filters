@@ -2,7 +2,7 @@
   <div class="container">
     <br><br><br>
     <div>
-      {{this.filtersControl}}
+      {{ filtersControl }}
       <form @submit.prevent="handlerSubmit" action="#" class="search-form" id="filters">
         <input type="hidden" name="filter" value="1">
         <catalog-filters-control-buttons
@@ -51,14 +51,24 @@
           <button type="submit" class="search-form__btn btn">Показать <span>(125)</span></button>
           <button type="button" class="btn btn--white" @click="resetAllFilters">Очистить</button>
         </div>
-        <modal-filters />
+        <modal-filters>
+          <template v-slot:filters>
+            <catalog-filters-control-buttons
+              :controls="roomsControls"
+              :value="filtersControl.rooms_modal"
+              @input="onChangeFilters"
+              name="rooms_modal[]"
+            />
+          </template>
+        </modal-filters>
       </form>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
+
 export default {
   name: 'IndexPage',
   components: {
@@ -99,10 +109,9 @@ export default {
     ...mapActions('filters', ['resetFilters']),
     ...mapActions('filters', ['resetFiltersAll']),
     onChangeFilters(data) {
-      console.log(data)
       this.changeFilters(data)
     },
-    handlerSubmit (){
+    handlerSubmit() {
       this.applyFilters()
       this.$router.push({
         path: `${this.$route.path}${this.url}`
@@ -113,7 +122,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('filters', ['filtersControl'])
+    ...mapGetters('filters', ['filtersControl']),
+    ...mapGetters('filters', ['url'])
   }
 }
 </script>

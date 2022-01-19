@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     handlerChange(e) {
-      this.$emit('handlerChange',{ name: this.name, value: this.value })
+      this.$emit('handlerChange',{ name: this.name, value: this.value, label: this.label })
     }
   },
   computed: {

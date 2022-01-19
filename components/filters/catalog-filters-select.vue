@@ -7,7 +7,7 @@
       <span v-if="!value.length"> {{ title }}</span>
       <div class="select-block__active" v-else>
         <span class="select-block__info">
-          <span class="select-block__selected">{{value[0].name}}</span>
+          <span class="select-block__selected">{{value[0].label}}</span>
           <span v-if="value.length > 1">...</span>
           <span v-if="value.length > 1">{{ value.length }}</span>
         </span>
@@ -25,8 +25,6 @@
       v-bind:css="false"
     >
       <div class="select-block__dropdown" v-show="areOptionsVisible">
-        {{value}}
-        {{selected}}
         <b-checkbox
           ref="checkbox"
           v-for="(item, key) in controls"

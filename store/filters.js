@@ -6,6 +6,7 @@ export const state = () => ({
     ],
     deadline: [],
     otdelka: [],
+    rooms_modal: [],
     price_ot: '1515',
     price_do: '',
     square_ot: '',
@@ -78,6 +79,7 @@ export const actions = {
       // Если массив данных []
       context.commit('CHANGE_FILTER_ARRAY', {
         value: params.value,
+        label: params.label,
         name: name
       })
     } else {
@@ -103,5 +105,6 @@ export const actions = {
 }
 
 export const getters = {
-  filtersControl: s => s.filters
+  filtersControl: s => s.filters,
+  url: s => s.url
 }

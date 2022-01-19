@@ -25,6 +25,7 @@ export default {
   props: ['value', 'controls', 'name'],
   methods: {
     handlerChange (data) {
+      console.log(data)
       this.$emit('input', data)
     }
   }
